@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reusableCell" rowHeight="334" id="KGk-i7-Jjw" customClass="EventoCell" customModule="TesteNTConsult" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="355" height="334"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="355" height="334"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tp3-uH-RbA">
+                        <rect key="frame" x="15" y="15" width="325" height="308"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mtW-Vf-Ocq">
+                                <rect key="frame" x="3" y="5" width="319" height="49.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49.5" id="8HU-YM-eW6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logomarca_Sicredi" translatesAutoresizingMaskIntoConstraints="NO" id="HlH-yV-ODD">
+                                <rect key="frame" x="10" y="56" width="305" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="oEh-FD-keK"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="HlH-yV-ODD" secondAttribute="trailing" constant="10" id="58Z-0K-ChZ"/>
+                            <constraint firstAttribute="bottom" secondItem="HlH-yV-ODD" secondAttribute="bottom" constant="20" id="AOf-Ba-x67"/>
+                            <constraint firstItem="HlH-yV-ODD" firstAttribute="top" secondItem="mtW-Vf-Ocq" secondAttribute="bottom" constant="1.5" id="GAD-zT-Qrz"/>
+                            <constraint firstAttribute="trailing" secondItem="mtW-Vf-Ocq" secondAttribute="trailing" constant="3" id="Mow-mb-hos"/>
+                            <constraint firstItem="mtW-Vf-Ocq" firstAttribute="leading" secondItem="Tp3-uH-RbA" secondAttribute="leading" constant="3" id="QiR-QS-uvM"/>
+                            <constraint firstItem="HlH-yV-ODD" firstAttribute="leading" secondItem="Tp3-uH-RbA" secondAttribute="leading" constant="10" id="cg8-xv-yg4"/>
+                            <constraint firstItem="mtW-Vf-Ocq" firstAttribute="top" secondItem="Tp3-uH-RbA" secondAttribute="top" constant="5" id="tDW-wA-DXy"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Tp3-uH-RbA" secondAttribute="trailing" constant="15" id="Iyg-Oy-BXR"/>
+                    <constraint firstAttribute="bottom" secondItem="Tp3-uH-RbA" secondAttribute="bottom" constant="15" id="T9p-b8-kK8"/>
+                    <constraint firstItem="Tp3-uH-RbA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="ZJq-YC-4zD"/>
+                    <constraint firstItem="Tp3-uH-RbA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="bdr-hv-nlB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="imageViewCelula" destination="HlH-yV-ODD" id="BzJ-qT-DN8"/>
+                <outlet property="labelTitleCelula" destination="mtW-Vf-Ocq" id="7mA-oK-JKE"/>
+                <outlet property="viewCelula" destination="Tp3-uH-RbA" id="XqS-i0-JAM"/>
+            </connections>
+            <point key="canvasLocation" x="165.94202898550725" y="145.98214285714286"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Logomarca_Sicredi" width="270" height="152"/>
+    </resources>
+</document>
