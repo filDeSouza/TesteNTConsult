@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EventModel: Decodable{
+struct EventoModel: Decodable{
     
     let people: [People]
     let date: Int

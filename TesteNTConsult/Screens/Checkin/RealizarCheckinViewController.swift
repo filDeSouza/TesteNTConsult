@@ -17,7 +17,7 @@ enum ErroCheckin {
     case erroResposta
 }
 
-class CheckinViewController: UIViewController {
+class RealizarCheckinViewController: UIViewController {
 
     //MARK: - Outlets
     @IBOutlet weak var imageHeader: UIImageView!
@@ -26,7 +26,7 @@ class CheckinViewController: UIViewController {
     @IBOutlet weak var textFieldEmail: UITextField!
     
     //MARK: - Variáveis e constantes
-    var evento: EventModel?
+    var evento: EventoModel?
     let utils = Utils()
     var endereco: String  = ""
     
@@ -35,7 +35,7 @@ class CheckinViewController: UIViewController {
         super.viewDidLoad()
         
         guard let eventoCheckin = evento else{return}
-        utils.getImage(url: eventoCheckin.image, imageView: imageHeader)
+        utils.obterImagem(url: eventoCheckin.image, imageView: imageHeader)
         labelTitulo.text = eventoCheckin.title
         // Do any additional setup after loading the view.
     }
@@ -46,7 +46,7 @@ class CheckinViewController: UIViewController {
         guard let campoNome = textFieldNome.text else{return}
         guard let campoEmail = textFieldEmail.text else{return}
         if !utils.validarDadosVazios(nome: campoNome, email: campoEmail) {
-            if utils.isEmailValido(campoEmail) {
+            if utils.validarEmail(campoEmail) {
                 utils.realizarCheckin(eventoID: eventoCheckin.id, nome: campoNome, email: campoEmail) { (retorno) in
                     DispatchQueue.main.async {
 
@@ -55,9 +55,9 @@ class CheckinViewController: UIViewController {
                     }
                 } onError: { (erro) in
                     switch erro{
-                        case .taskError:
+                        case .erroDataTask:
                             self.mensagemErro()
-                        case .noResponse:
+                        case .semResposta:
                             self.mensagemErro()
                         case .erroResposta:
                             self.mensagemErro()
@@ -67,13 +67,13 @@ class CheckinViewController: UIViewController {
                 }
 
             }else{
-                let alert = UIAlertController(title: Constants.tituloAlerta, message: Constants.mensagemEmailInvalido, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: Constants.botaoOkAlerta, style: .cancel, handler: nil))
+                let alert = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemEmailInvalido, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
         }else{
-            let alert = UIAlertController(title: Constants.tituloAlerta, message: Constants.mensagemCamposVazios, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: Constants.botaoOkAlerta, style: .cancel, handler: nil))
+            let alert = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemCamposVazios, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
 
@@ -82,9 +82,9 @@ class CheckinViewController: UIViewController {
     
     //MARK: - Alerta checkin realizado
     func finalizaCheckin(){
-        let alert = UIAlertController(title: Constants.tituloAlerta, message: Constants.mensagemCheckinRealizado, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: Constants.botaoOkAlerta, style: .default, handler: { action in
-            self.performSegue(withIdentifier: Constants.segueRetornaEventos, sender: self)
+        let alert = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemCheckinRealizado, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .default, handler: { action in
+            self.performSegue(withIdentifier: Constantes.segueRetornaEventos, sender: self)
                     self.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
@@ -92,8 +92,8 @@ class CheckinViewController: UIViewController {
     
     //MARK: - Mensagem Erro
     func mensagemErro(){
-        let alert = UIAlertController(title: Constants.tituloAlerta, message: Constants.mensagemSistemaIndisponivel, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: Constants.botaoOkAlerta, style: .cancel, handler: nil))
+        let alert = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemSistemaIndisponivel, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -107,12 +107,12 @@ class CheckinViewController: UIViewController {
         
         guard let eventoCheckin = evento else{return}
         if !utils.compartilhamentoWhatsapp(evento: eventoCheckin, endereco: endereco){
-            let alert = UIAlertController(title: Constants.tituloAlerta, message: Constants.mensagemRetornoErro, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: Constants.botaoOkAlerta, style: .cancel, handler: nil))
+            let alert = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemRetornoErro, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }else{
-            let alert = UIAlertController(title: Constants.tituloAlerta, message: Constants.mensagemRetornoSucesso, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: Constants.botaoOkAlerta, style: .cancel, handler: nil))
+            let alert = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemRetornoSucesso, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         

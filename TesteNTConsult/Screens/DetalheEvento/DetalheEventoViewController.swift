@@ -14,7 +14,7 @@ class DetalheEventoViewController: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var labelTituloEvento: UILabel!
-    @IBOutlet weak var imageEvento: UIImageView!
+    @IBOutlet weak var imagemEvento: UIImageView!
     @IBOutlet weak var labelData: UILabel!
     @IBOutlet weak var labelDescricao: UILabel!
     @IBOutlet weak var labelPreco: UILabel!
@@ -24,7 +24,7 @@ class DetalheEventoViewController: UIViewController {
     //MARK: - Variáveis e constantes
     var idEvento: String?
     let utils = Utils()
-    var evento: EventModel?
+    var evento: EventoModel?
     
     //MARK: - Didload
     override func viewDidLoad() {
@@ -47,11 +47,11 @@ class DetalheEventoViewController: UIViewController {
                     self.labelDescricao.text = resultadoDetalheEvento.description
                     let localizacao = CLLocation(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude)
                     let location2D = CLLocationCoordinate2D(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude)
-                    utils.setPinUsingMKPlacemark(location: location2D, mapView: self.mapaLocalizacao)
-                    utils.getAdressFromLatLon(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude, labelEndereco: self.labelEndereco)
+                    utils.setarMarcadorMapa(localizacao: location2D, mapView: self.mapaLocalizacao)
+                    utils.obterEnderecoPorLatELon(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude, labelEndereco: self.labelEndereco)
                     self.mapaLocalizacao.centerToLocation(localizacao)
                     self.labelPreco.text = utils.formatacaoMoeda(valor: resultadoDetalheEvento.price)
-                    utils.getImage(url: resultadoDetalheEvento.image, imageView: self.imageEvento)
+                    utils.obterImagem(url: resultadoDetalheEvento.image, imageView: self.imagemEvento)
                     ProgressHUD.dismiss()
                 }
                 
@@ -72,7 +72,7 @@ class DetalheEventoViewController: UIViewController {
     
     //MARK: - Checkin
     @IBAction func btEfetuarCheckin(_ sender: UIButton) {
-        guard let checkinViewController = self.storyboard?.instantiateViewController(identifier: Constants.viewControllerCheckin) as? CheckinViewController else {return}
+        guard let checkinViewController = self.storyboard?.instantiateViewController(identifier: Constantes.viewControllerCheckin) as? CheckinViewController else {return}
         guard let textoEndereco = labelEndereco.text else {return}
         checkinViewController.endereco = textoEndereco
         checkinViewController.evento = evento
