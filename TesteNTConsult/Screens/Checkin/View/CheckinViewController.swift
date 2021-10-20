@@ -10,6 +10,7 @@ import ProgressHUD
 
 class CheckinViewController: UIViewController {
 
+    //MARK: - Elementos de tela
     lazy var contentView:  UIView = {
         let contentView = UIView()
         contentView.layer.cornerRadius = 12
@@ -45,6 +46,8 @@ class CheckinViewController: UIViewController {
         view.textAlignment = .center
         view.lineBreakMode = .byWordWrapping
         view.numberOfLines = 0
+        view.textColor = UIColor(named: Constantes.BrandColors.sicredi)
+        view.font = UIFont(name: "Marker Felt", size: 25.0)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -82,9 +85,12 @@ class CheckinViewController: UIViewController {
     var evento: EventoModel
     let utils = Utils()
     var endereco: String  = ""
+    let viewModel: CheckinViewModel
     
-    init(evento: EventoModel ) {
+    //MARK: - Init
+    init(evento: EventoModel, viewModel: CheckinViewModel) {
         self.evento = evento
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -93,6 +99,7 @@ class CheckinViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - DidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -105,9 +112,9 @@ class CheckinViewController: UIViewController {
         labelTituloEvento.text = evento.title
     }
     
+    //MARK: - Função para adicionar as subViews
     func addSubviews(){
         
-
         self.view.addSubview(imagemEvento)
         self.view.addSubview(botaoVoltar)
         self.view.addSubview(botaoCompartilhar)
@@ -119,7 +126,7 @@ class CheckinViewController: UIViewController {
 
     }
     
-
+    //MARK: - Configuração das subViews
     func setupViews(){
         
         self.botaoVoltar.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -128,7 +135,6 @@ class CheckinViewController: UIViewController {
         self.botaoVoltar.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 15).isActive = true
         self.botaoVoltar.addTarget(self, action: #selector(voltar), for: .touchDown)
         
-        
         self.botaoCompartilhar.widthAnchor.constraint(equalToConstant: 46).isActive = true
         self.botaoCompartilhar.heightAnchor.constraint(equalToConstant: 46).isActive = true
         self.botaoCompartilhar.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
@@ -136,7 +142,6 @@ class CheckinViewController: UIViewController {
         self.botaoCompartilhar.addTarget(self, action: #selector(realizarCompartilhamento), for: .touchDown)
         
         self.contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        //self.contentView.heightAnchor.constraint(equalToConstant: 800).isActive = true
         self.contentView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
         self.contentView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         self.contentView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
@@ -147,7 +152,6 @@ class CheckinViewController: UIViewController {
         self.imagemEvento.heightAnchor.constraint(equalToConstant: 220).isActive = true
         self.imagemEvento.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         self.imagemEvento.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
         
         self.labelTituloEvento.heightAnchor.constraint(equalToConstant: 30).isActive = true
         self.labelTituloEvento.widthAnchor.constraint(equalToConstant: 300).isActive = true
@@ -171,14 +175,14 @@ class CheckinViewController: UIViewController {
         self.checkinButton.addTarget(self, action: #selector(realizarCheckin), for: .touchDown)
     }
     
+    //MARK: - Função para voltar para a tela de detalhes
     @objc private func voltar() {
 
-        navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
+        viewModel.presentTelaDetalhesEvento(idEvento: evento.id)
     }
     
+    //MARK: - Função para realizar o compartilhamento
     @objc private func realizarCompartilhamento() {
-        //guard let eventoCheckin = evento else{return}
         if !utils.compartilhamentoWhatsapp(evento: evento, endereco: endereco){
             let alert = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemRetornoErro, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
@@ -190,6 +194,7 @@ class CheckinViewController: UIViewController {
         }
     }
     
+    //MARK: - Função realizar checkin
     @objc private func realizarCheckin() {
 
         ProgressHUD.show()
@@ -207,22 +212,32 @@ class CheckinViewController: UIViewController {
                 } onError: { (erro) in
                     switch erro{
                         case .erroDataTask:
-                            self.mensagemErro()
+                            DispatchQueue.main.async {
+                                self.mensagemErro()
+                            }
                         case .semResposta:
-                            self.mensagemErro()
+                            DispatchQueue.main.async {
+                                self.mensagemErro()
+                            }
                         case .erroResposta:
-                            self.mensagemErro()
+                            DispatchQueue.main.async {
+                                self.mensagemErro()
+                            }
                         default:
-                            self.mensagemErro()
+                            DispatchQueue.main.async {
+                                self.mensagemErro()
+                            }
                     }
                 }
 
             }else{
+                ProgressHUD.dismiss()
                 let alerta = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemEmailInvalido, preferredStyle: .alert)
                 alerta.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
                 self.present(alerta, animated: true, completion: nil)
             }
         }else{
+            ProgressHUD.dismiss()
             let alerta = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemCamposVazios, preferredStyle: .alert)
             alerta.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
             self.present(alerta, animated: true, completion: nil)
@@ -234,14 +249,14 @@ class CheckinViewController: UIViewController {
         ProgressHUD.dismiss()
         let alerta = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemCheckinRealizado, preferredStyle: .alert)
         alerta.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .default, handler: { action in
-            self.navigationController?.popToRootViewController(animated: true)
-            self.dismiss(animated: true, completion: nil)
+            self.viewModel.presentTelaEventos()
         }))
         self.present(alerta, animated: true, completion: nil)
     }
     
     //MARK: - Mensagem Erro
     func mensagemErro(){
+        ProgressHUD.dismiss()
         let alerta = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemSistemaIndisponivel, preferredStyle: .alert)
         alerta.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
         self.present(alerta, animated: true, completion: nil)

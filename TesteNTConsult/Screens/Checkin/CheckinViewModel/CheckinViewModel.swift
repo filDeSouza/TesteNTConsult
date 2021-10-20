@@ -17,7 +17,11 @@ class CheckinViewModel{
         self.model = model
     }
     
-    public func presentTelaDetalhesEvento(){
+    public func presentTelaDetalhesEvento(idEvento: String){
+        coordinator.showTelaDetalhesEvento(idEvento: idEvento)
+    }
+    
+    public func presentTelaEventos(){
         coordinator.showTelaEventos()
     }
     

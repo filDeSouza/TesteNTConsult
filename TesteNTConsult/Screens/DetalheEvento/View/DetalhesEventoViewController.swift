@@ -11,6 +11,7 @@ import ProgressHUD
 
 class DetalhesEventoViewController: UIViewController {
 
+    //MARK: - Elementos de tela
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -28,6 +29,7 @@ class DetalhesEventoViewController: UIViewController {
         contentView.layer.cornerRadius = 12
         contentView.backgroundColor = UIColor.white
         contentView.translatesAutoresizingMaskIntoConstraints = false
+        utils.formatarSombraView(view: contentView)
         return contentView
     }()
     
@@ -58,21 +60,26 @@ class DetalhesEventoViewController: UIViewController {
         view.textAlignment = .center
         view.lineBreakMode = .byWordWrapping
         view.numberOfLines = 0
+        view.textColor = UIColor(named: Constantes.BrandColors.sicredi)
+        view.font = UIFont(name: "Marker Felt", size: 25.0)
+        view.adjustsFontSizeToFitWidth = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let stackViewData = UIStackView()
     lazy var labelTituloData: UILabel = {
         let view = UILabel(frame: .zero)
         view.text = "Data"
         view.textAlignment = .center
+        view.numberOfLines = 0
+        view.font = UIFont(name: "Marker Felt Wide", size: 20.0)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     lazy var labelData: UILabel = {
         let view = UILabel(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = UIFont(name: "Marker Felt Thin", size: 17.0)
         return view
     }()
     
@@ -81,6 +88,7 @@ class DetalhesEventoViewController: UIViewController {
         view.textAlignment = .center
         view.lineBreakMode = .byWordWrapping
         view.numberOfLines = 0
+        view.adjustsFontSizeToFitWidth = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -90,6 +98,7 @@ class DetalhesEventoViewController: UIViewController {
         view.textAlignment = .center
         view.lineBreakMode = .byWordWrapping
         view.text = "Localização"
+        view.font = UIFont(name: "Marker Felt Wide", size: 20.0)
         view.numberOfLines = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -100,6 +109,8 @@ class DetalhesEventoViewController: UIViewController {
         view.textAlignment = .center
         view.lineBreakMode = .byWordWrapping
         view.numberOfLines = 0
+        view.font = UIFont(name: "Marker Felt Thin", size: 17.0)
+        view.adjustsFontSizeToFitWidth = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -114,6 +125,7 @@ class DetalhesEventoViewController: UIViewController {
         let view = UILabel(frame: .zero)
         view.textAlignment = .center
         view.lineBreakMode = .byWordWrapping
+        view.font = UIFont(name: "Marker Felt Wide", size: 20.0)
         view.text = "Preço"
         view.numberOfLines = 0
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -125,6 +137,7 @@ class DetalhesEventoViewController: UIViewController {
         view.textAlignment = .center
         view.lineBreakMode = .byWordWrapping
         view.numberOfLines = 0
+        view.font = UIFont(name: "Marker Felt Thin", size: 17.0)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -140,21 +153,21 @@ class DetalhesEventoViewController: UIViewController {
     
     
     //MARK: - Variáveis e constantes
-    var idEvento: String
     let utils = Utils()
     var evento: EventoModel?
+    let viewModel: DetalhesEventoViewModel
     
-    init(idEvento: String ) {
-        self.idEvento = idEvento
+    //MARK: - Init
+    init(viewModel: DetalhesEventoViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    //MARK: - DidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -168,30 +181,45 @@ class DetalhesEventoViewController: UIViewController {
         
         //guard let idEventoDetalhe = idEvento else {return}
         
-        utils.obterDetalhesEvento(idEvento: idEvento, completion: {(evento) in
-            DispatchQueue.main.async {
-                self.evento = evento
-                if let resultadoDetalheEvento = self.evento{
-                    self.labelTituloEvento.text = resultadoDetalheEvento.title
-                    self.labelData.text = self.utils.formatacaoData(dataUnix: resultadoDetalheEvento.date)
-                    self.labelDescricao.text = resultadoDetalheEvento.description
-                    let localizacao = CLLocation(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude)
-                    let location2D = CLLocationCoordinate2D(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude)
-                    self.utils.setarMarcadorMapa(localizacao: location2D, mapView: self.mapaLocalizacao)
-                    self.utils.obterEnderecoPorLatELon(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude, labelEndereco: self.labelEndereco)
-                    self.mapaLocalizacao.centerToLocation(localizacao)
-                    self.labelPreco.text = self.utils.formatacaoMoeda(valor: resultadoDetalheEvento.price)
-                    self.utils.obterImagem(url: resultadoDetalheEvento.image, imageView: self.imagemEvento)
-                    ProgressHUD.dismiss()
-                }
-                
+        viewModel.obterEvento(idEvento: viewModel.id(), completion: {(evento) in
+            self.evento = evento
+            if let resultadoDetalheEvento = self.evento{
+                self.labelTituloEvento.text = resultadoDetalheEvento.title
+                self.labelData.text = self.utils.formatacaoData(dataUnix: resultadoDetalheEvento.date)
+                self.labelDescricao.text = resultadoDetalheEvento.description
+                let localizacao = CLLocation(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude)
+                let location2D = CLLocationCoordinate2D(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude)
+                self.utils.setarMarcadorMapa(localizacao: location2D, mapView: self.mapaLocalizacao)
+                self.utils.obterEnderecoPorLatELon(latitude: resultadoDetalheEvento.latitude, longitude: resultadoDetalheEvento.longitude, labelEndereco: self.labelEndereco)
+                self.mapaLocalizacao.centerToLocation(localizacao)
+                self.labelPreco.text = self.utils.formatacaoMoeda(valor: resultadoDetalheEvento.price)
+                self.utils.obterImagem(url: resultadoDetalheEvento.image, imageView: self.imagemEvento)
+                ProgressHUD.dismiss()
             }
             
-        }, onError: {(error) in
-            
+        }, onError: { (erro) in
+            switch erro{
+                case .erroDataTask:
+                    DispatchQueue.main.async {
+                        self.mensagemErro()
+                    }
+                case .semResposta:
+                    DispatchQueue.main.async {
+                        self.mensagemErro()
+                    }
+                case .erroResposta:
+                    DispatchQueue.main.async {
+                        self.mensagemErro()
+                    }
+                default:
+                    DispatchQueue.main.async {
+                        self.mensagemErro()
+                    }
+            }
         })
     }
     
+    //MARK: - Função para adicionar as subViews
     func addSubviews(){
         
         view.addSubview(self.scrollView)
@@ -211,7 +239,7 @@ class DetalhesEventoViewController: UIViewController {
         self.contentView.addSubview(labelRodape)
     }
     
-
+    //MARK: - Configuração das subViews
     func setupViews(){
         
         self.botaoVoltar.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -219,7 +247,6 @@ class DetalhesEventoViewController: UIViewController {
         self.botaoVoltar.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         self.botaoVoltar.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: 15).isActive = true
         self.botaoVoltar.addTarget(self, action: #selector(voltar), for: .touchDown)
-        
         
         self.botaoCheckin.widthAnchor.constraint(equalToConstant: 55).isActive = true
         self.botaoCheckin.heightAnchor.constraint(equalToConstant: 55).isActive = true
@@ -245,18 +272,15 @@ class DetalhesEventoViewController: UIViewController {
         self.imagemEvento.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
         self.imagemEvento.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        
         self.labelTituloEvento.heightAnchor.constraint(equalToConstant: 30).isActive = true
         self.labelTituloEvento.widthAnchor.constraint(equalToConstant: 300).isActive = true
         self.labelTituloEvento.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 40).isActive = true
         self.labelTituloEvento.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         
-        
         self.labelTituloData.heightAnchor.constraint(equalToConstant: 30).isActive = true
         self.labelTituloData.widthAnchor.constraint(equalToConstant: 150).isActive = true
         self.labelTituloData.topAnchor.constraint(equalTo: self.labelTituloEvento.bottomAnchor, constant: 20).isActive = true
         self.labelTituloData.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        
         
         self.labelData.heightAnchor.constraint(equalToConstant: 30).isActive = true
         self.labelData.widthAnchor.constraint(equalToConstant: 150).isActive = true
@@ -273,7 +297,7 @@ class DetalhesEventoViewController: UIViewController {
         self.labelTituloLocalizacao.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.labelTituloLocalizacao.topAnchor.constraint(equalTo: self.labelDescricao.bottomAnchor, constant: 20).isActive = true
         
-        self.labelEndereco.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        self.labelEndereco.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.labelEndereco.widthAnchor.constraint(equalToConstant: 300).isActive = true
         self.labelEndereco.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         self.labelEndereco.topAnchor.constraint(equalTo: self.labelTituloLocalizacao.bottomAnchor, constant: 10).isActive = true
@@ -299,19 +323,23 @@ class DetalhesEventoViewController: UIViewController {
         self.labelRodape.topAnchor.constraint(equalTo: self.labelPreco.bottomAnchor, constant: 20).isActive = true
     }
     
+    //MARK: - Função para voltar para a tela de detalhes
     @objc private func voltar() {
-
-        navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
+        viewModel.presentTelaEventos()
     }
     
+    //MARK: - Função para avançar para o checkin
     @objc private func realizarCheckin() {
-
         guard let eventoCheckin = evento else {return}
-        let checkinViewController = CheckinViewController(evento: eventoCheckin)
-
-        //checkinViewController.evento = eventoCheckin
-        self.navigationController?.pushViewController(checkinViewController, animated: true)
+        viewModel.presentTelaCheckin(evento: eventoCheckin)
+    }
+    
+    //MARK: - Mensagem Erro
+    func mensagemErro(){
+        ProgressHUD.dismiss()
+        let alerta = UIAlertController(title: Constantes.tituloAlerta, message: Constantes.mensagemSistemaIndisponivel, preferredStyle: .alert)
+        alerta.addAction(UIAlertAction(title: Constantes.botaoOkAlerta, style: .cancel, handler: nil))
+        self.present(alerta, animated: true, completion: nil)
     }
 
 }

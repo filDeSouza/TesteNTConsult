@@ -16,7 +16,7 @@ class EventosViewModel{
         self.coordinator = coordinator
     }
     
-    public func presentDetalhesEvento(){
+    public func presentDetalhesEvento(idEvento: String){
         coordinator.showTelaDetalhesEvento(idEvento: idEvento)
     }
     

@@ -9,7 +9,7 @@ import Foundation
 
 struct EventoModel: Decodable{
     
-    let people: [People]
+    let people: [PessoaModel]
     let date: Int
     let description: String
     let image: String
@@ -21,6 +21,6 @@ struct EventoModel: Decodable{
     
 }
 
-struct People: Decodable{
+struct PessoaModel: Decodable{
     
 }

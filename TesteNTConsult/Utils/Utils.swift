@@ -14,11 +14,11 @@ enum EventosError {
     case senhaInvalida
     case dadosVazios
     case url
-    case taskError
-    case noResponse
-    case noData
-    case responseStatusCode(code: Int)
-    case invalidJSON
+    case erroDataTask
+    case semResposta
+    case semDados
+    case erroCodigoRetorno(code: Int)
+    case JSONinvalido
     case erroResposta
 }
 
@@ -31,19 +31,19 @@ class Utils {
     let apiService = APIService()
     
     //MARK: - Obter eventos da API
-    func obterEventos(completion: @escaping([EventModel]?) -> Void, onError: @escaping(EventosError) -> Void){
-        apiService.performRequestEvent(completion: { (result) in
+    func obterEventos(completion: @escaping([EventoModel]?) -> Void, onError: @escaping(EventosError) -> Void){
+        apiService.obterEventos(completion: { (result) in
             if result != nil{
                 completion(result)
             }
         }, onError: { (error) in
             switch error{
-            case .invalidJSON:
-                onError(.invalidJSON)
-            case .noData:
-                onError(.noData)
-            case .noResponse:
-                onError(.noResponse)
+            case .JSONinvalido:
+                onError(.JSONinvalido)
+            case .semDados:
+                onError(.semDados)
+            case .semResposta:
+                onError(.semResposta)
             case .erroResposta:
                 onError(.erroResposta)
             default:
@@ -53,19 +53,19 @@ class Utils {
     }
     
     //MARK: - Obter detalhes do evento da API
-    func obterDetalhesEvento(idEvento: String, completion: @escaping(EventModel?) -> Void, onError: @escaping(EventosError) -> Void){
-        apiService.performRequestDetalheEvento(idEvento: idEvento, completion: { (result) in
+    func obterDetalhesEvento(idEvento: String, completion: @escaping(EventoModel?) -> Void, onError: @escaping(EventosError) -> Void){
+        apiService.obterDetalheEvento(idEvento: idEvento, completion: { (result) in
             if result != nil{
                 completion(result)
             }
         }, onError: { (error) in
             switch error{
-            case .invalidJSON:
-                onError(.invalidJSON)
-            case .noData:
-                onError(.noData)
-            case .noResponse:
-                onError(.noResponse)
+            case .JSONinvalido:
+                onError(.JSONinvalido)
+            case .semDados:
+                onError(.semDados)
+            case .semResposta:
+                onError(.semResposta)
             case .erroResposta:
                 onError(.erroResposta)
             default:
@@ -76,18 +76,18 @@ class Utils {
     
     //MARK: - Realizar POST checkin
     func realizarCheckin(eventoID: String, nome: String, email: String, completion: @escaping(APIRetorno) -> Void, onError: @escaping(EventosError) -> Void){
-        apiService.performCheckin(idEvento: eventoID, nome: nome, email: email) { (result) in
+        apiService.realizarCheckin(idEvento: eventoID, nome: nome, email: email) { (result) in
             if result != nil{
                 completion(.sucesso)
             }
         } onError: { (error) in
             switch error{
-            case .invalidJSON:
-                onError(.invalidJSON)
-            case .noData:
-                onError(.noData)
-            case .noResponse:
-                onError(.noResponse)
+            case .JSONinvalido:
+                onError(.JSONinvalido)
+            case .semDados:
+                onError(.semDados)
+            case .semResposta:
+                onError(.semResposta)
             case .erroResposta:
                 onError(.erroResposta)
             default:
@@ -125,11 +125,11 @@ class Utils {
     }
     
     //MARK: - Obter dados da imagem
-    func getImage(url: String, imageView: UIImageView){
+    func obterImagem(url: String, imageView: UIImageView){
         
         guard let url = URL(string: url) else {return}
         
-        getData(from: url) { data, response, error in
+        obterDadosImagem(from: url) { data, response, error in
             if error != nil{
                 DispatchQueue.main.async {
                     imageView.image = UIImage(named: "Logomarca_Sicredi")
@@ -149,7 +149,6 @@ class Utils {
                         imageView.image = UIImage(data: data)
                 }
                 
-
                 }
         }
         
@@ -157,14 +156,14 @@ class Utils {
     }
     
     //MARK: - Popular celula da TableView
-    func popularCelulaEvento(_ evento: EventModel,_ cell: EventoCell){
+    func popularCelulaEvento(_ evento: EventoModel,_ cell: EventoCell){
 
         cell.labelTitleCelula.text = evento.title
         
         guard let url = URL(string: evento.image) else {return}
         
         
-        getData(from: url) { data, response, error in
+        obterDadosImagem(from: url) { data, response, error in
 
             if error != nil{
                 DispatchQueue.main.async {
@@ -187,26 +186,37 @@ class Utils {
                     cell.imageViewCelula?.image = UIImage(data: data)
                 }
                 
-
                 }
             }
-            
         }
     }
     
+    //MARK: - Formatação da sombra da view
+    func formatarSombraView(view: UIView){
+        
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowPath = UIBezierPath(rect: view.bounds).cgPath
+        view.layer.shadowRadius = 5
+        view.layer.shouldRasterize = true
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowOpacity = 0.3
+        
+    }
+    
     //MARK: - Formatação da sombra da célula
-    func cellViewShadow(cell: EventoCell){
+    func formatarSombraCelula(cell: EventoCell){
         
         cell.viewCelula.layer.shadowColor = UIColor.black.cgColor
         cell.viewCelula.layer.shadowPath = UIBezierPath(rect: cell.viewCelula.bounds).cgPath
         cell.viewCelula.layer.shadowRadius = 5
+        cell.viewCelula.layer.shouldRasterize = true
         cell.viewCelula.layer.shadowOffset = CGSize(width: 0, height: 1)
         cell.viewCelula.layer.shadowOpacity = 0.3
         
     }
     
     //MARK: - Obter valor da imagem por meio da URLSession
-    func getData(from url: URL, completion: @escaping(Data?, URLResponse?, Error?) -> ()){
+    func obterDadosImagem(from url: URL, completion: @escaping(Data?, URLResponse?, Error?) -> ()){
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
@@ -222,7 +232,7 @@ class Utils {
     }
     
     //MARK: - Validação de email
-    func isEmailValido(_ email: String) -> Bool{
+    func validarEmail(_ email: String) -> Bool{
         
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
@@ -230,14 +240,15 @@ class Utils {
         
     }
     
-    func compartilhamentoWhatsapp(evento: EventModel, endereco: String) -> Bool{
+    //MARK: - Compartilhamento do WhatsApp
+    func compartilhamentoWhatsapp(evento: EventoModel, endereco: String) -> Bool{
         
         let mensagem = "Olá\nGostaria de compartilhar com você este evento:\n\n\(evento.title)/n/nEle acontecerá em \(formatacaoData(dataUnix: evento.date))\n\nEndereço:\n\(endereco)\n\nO valor para a participação é de \(formatacaoMoeda(valor: evento.price)), seria muito legal se você participasse!!"
         var mensagemRetorno: Bool!
-        let queryCharSet = NSCharacterSet.urlQueryAllowed
+        let queryCaracteres = NSCharacterSet.urlQueryAllowed
         
-        if let escapedString = mensagem.addingPercentEncoding(withAllowedCharacters: queryCharSet) {
-            if let whatsAppUrl = URL(string: "whatsapp://send?text=\(escapedString)"){
+        if let retornoString = mensagem.addingPercentEncoding(withAllowedCharacters: queryCaracteres) {
+            if let whatsAppUrl = URL(string: "whatsapp://send?text=\(retornoString)"){
                 if UIApplication.shared.canOpenURL(whatsAppUrl) {
                     UIApplication.shared.open(whatsAppUrl, options: [:], completionHandler: nil)
                     mensagemRetorno = true
@@ -249,16 +260,17 @@ class Utils {
         return mensagemRetorno
     }
     
-    func getAdressFromLatLon(latitude: Double, longitude: Double, labelEndereco: UILabel){
+    //MARK: - Obter endereço pela Latitude e Longitude
+    func obterEnderecoPorLatELon(latitude: Double, longitude: Double, labelEndereco: UILabel){
         
-        var center: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        var centro: CLLocationCoordinate2D = CLLocationCoordinate2D()
         
-        let ceo: CLGeocoder = CLGeocoder()
-        center.latitude = latitude
-        center.longitude = longitude
-        let location: CLLocation = CLLocation(latitude: center.latitude, longitude: center.longitude)
+        let geocoder: CLGeocoder = CLGeocoder()
+        centro.latitude = latitude
+        centro.longitude = longitude
+        let localizacao: CLLocation = CLLocation(latitude: centro.latitude, longitude: centro.longitude)
                 
-        ceo.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+        geocoder.reverseGeocodeLocation(localizacao, completionHandler: { (placemarks, error) in
             
             if error != nil{
                 print("reverse geodcode fail: \(error!.localizedDescription)")
@@ -269,38 +281,39 @@ class Utils {
             if pm.count > 0 {
                                 let pm = placemarks![0]
 
-                                var addressString : String = ""
+                                var enderecoString : String = ""
 
                                 if pm.thoroughfare != nil {
-                                    addressString = addressString + pm.thoroughfare! + ", "
+                                    enderecoString = enderecoString + pm.thoroughfare! + ", "
                                 }
                                 if pm.subThoroughfare != nil {
-                                    addressString = addressString + pm.subThoroughfare! + ", "
+                                    enderecoString = enderecoString + pm.subThoroughfare! + ", "
                                 }
                                 if pm.subLocality != nil {
-                                    addressString = addressString + pm.subLocality! + ", "
+                                    enderecoString = enderecoString + pm.subLocality! + ", "
                                 }
                                 if pm.locality != nil {
-                                    addressString = addressString + pm.locality! + ", "
+                                    enderecoString = enderecoString + pm.locality! + ", "
                                 }
                                 if pm.country != nil {
-                                    addressString = addressString + pm.country! + ", "
+                                    enderecoString = enderecoString + pm.country! + ", "
                                 }
                                 if pm.postalCode != nil {
-                                    addressString = addressString + pm.postalCode! + " "
+                                    enderecoString = enderecoString + pm.postalCode! + " "
                                 }
 
-                                labelEndereco.text = addressString
+                                labelEndereco.text = enderecoString
                 
                           }
         })
 
     }
     
-    func setPinUsingMKPlacemark(location: CLLocationCoordinate2D, mapView: MKMapView) {
-       let pin = MKPlacemark(coordinate: location)
-       let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
-       mapView.setRegion(coordinateRegion, animated: true)
+    //MARK: - Colocar marcador no mapa
+    func setarMarcadorMapa(localizacao: CLLocationCoordinate2D, mapView: MKMapView) {
+       let pin = MKPlacemark(coordinate: localizacao)
+       let coordenadasRegiao = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
+       mapView.setRegion(coordenadasRegiao, animated: true)
        mapView.addAnnotation(pin)
     }
 
@@ -312,9 +325,9 @@ extension UIImageView{
         DispatchQueue.global().async { [weak self] in
             
             if let data = try? Data(contentsOf: url){
-                if let image = UIImage(data: data){
+                if let imagem = UIImage(data: data){
                     DispatchQueue.main.async {
-                        self?.image = image
+                        self?.image = imagem
                     }
                 }
             }
@@ -326,12 +339,12 @@ extension UIImageView{
 //MARK: - Extensão MAP para obter localização
 extension MKMapView{
     func centerToLocation(
-        _ location: CLLocation, regionRadius: CLLocationDistance = 500
+        _ localizacao: CLLocation, raioRegiao: CLLocationDistance = 500
     ){
-        let coordinateRegion = MKCoordinateRegion(
-            center: location.coordinate,
-            latitudinalMeters: regionRadius,
-            longitudinalMeters: regionRadius)
-        setRegion(coordinateRegion, animated: true)
+        let coordenadasRegiao = MKCoordinateRegion(
+            center: localizacao.coordinate,
+            latitudinalMeters: raioRegiao,
+            longitudinalMeters: raioRegiao)
+        setRegion(coordenadasRegiao, animated: true)
     }
 }

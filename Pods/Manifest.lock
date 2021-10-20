@@ -1,16 +1,20 @@
 PODS:
+  - CLTypingLabel (0.4.0)
   - ProgressHUD (13.6)
 
 DEPENDENCIES:
+  - CLTypingLabel (~> 0.4.0)
   - ProgressHUD
 
 SPEC REPOS:
   trunk:
+    - CLTypingLabel
     - ProgressHUD
 
 SPEC CHECKSUMS:
+  CLTypingLabel: 95a7d1faf7e3d1d952cd11cb0491d17d80c50934
   ProgressHUD: 4bdaa0d2ddf676b23324b199f9facffb5c3a1620
 
-PODFILE CHECKSUM: 3f75c38dd3d4e8ee70f0312219da8bb794cdef78
+PODFILE CHECKSUM: b3b599a01a9bed4e23377b21ca09ab00c5da2706
 
 COCOAPODS: 1.10.2

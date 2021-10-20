@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B61C54C27139A3D00703972 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61C54B27139A3D00703972 /* CheckinViewController.swift */; };
+		3B4639632720CDB8004AEF30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B4639612720CDB8004AEF30 /* Main.storyboard */; };
+		3B5B6A8B27206D8C005E6A0F /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6A8A27206D8C005E6A0F /* CheckinViewController.swift */; };
+		3B5B6AA4272098FF005E6A0F /* EventosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6AA3272098FF005E6A0F /* EventosViewModel.swift */; };
+		3B5B6AA927209923005E6A0F /* DetalhesEventoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6AA827209923005E6A0F /* DetalhesEventoViewModel.swift */; };
+		3B5B6AAE27209939005E6A0F /* CheckinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6AAD27209939005E6A0F /* CheckinViewModel.swift */; };
+		3B5B6AB327209949005E6A0F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6AB127209948005E6A0F /* Coordinator.swift */; };
+		3B5B6AB427209949005E6A0F /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6AB227209949005E6A0F /* MainCoordinator.swift */; };
+		3B5B6AC42720A4E5005E6A0F /* ListaEventosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B6AC32720A4E4005E6A0F /* ListaEventosViewController.swift */; };
+		3B6211E7271E196600523EB1 /* DetalhesEventoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6211E6271E196600523EB1 /* DetalhesEventoViewController.swift */; };
 		3B67C7792715DC7E00FC8B7F /* TesteNTConsultUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B67C7782715DC7E00FC8B7F /* TesteNTConsultUITests.swift */; };
 		3B6FAFD9271099FA00C5C312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FAFD8271099FA00C5C312 /* AppDelegate.swift */; };
 		3B6FAFDB271099FA00C5C312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FAFDA271099FA00C5C312 /* SceneDelegate.swift */; };
-		3B6FAFDD271099FA00C5C312 /* EventosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FAFDC271099FA00C5C312 /* EventosViewController.swift */; };
-		3B6FAFE0271099FA00C5C312 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B6FAFDE271099FA00C5C312 /* Main.storyboard */; };
 		3B6FAFE2271099FC00C5C312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B6FAFE1271099FC00C5C312 /* Assets.xcassets */; };
 		3B6FAFE5271099FC00C5C312 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B6FAFE3271099FC00C5C312 /* LaunchScreen.storyboard */; };
 		3B6FAFF62710A18400C5C312 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FAFF52710A18400C5C312 /* APIService.swift */; };
@@ -20,8 +26,7 @@
 		3B6FAFFD2710A1AE00C5C312 /* Constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FAFFC2710A1AE00C5C312 /* Constantes.swift */; };
 		3B6FB0012710A1C800C5C312 /* EventoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FAFFF2710A1C800C5C312 /* EventoCell.swift */; };
 		3B6FB0022710A1C800C5C312 /* EventoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B6FB0002710A1C800C5C312 /* EventoCell.xib */; };
-		3B6FB0052710A1DF00C5C312 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FB0042710A1DF00C5C312 /* EventModel.swift */; };
-		3B6FB00D2710C1CB00C5C312 /* DetalheEventoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FB00C2710C1CB00C5C312 /* DetalheEventoViewController.swift */; };
+		3B6FB0052710A1DF00C5C312 /* EventoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6FB0042710A1DF00C5C312 /* EventoModel.swift */; };
 		4245F95348815222AA0B9661 /* Pods_TesteNTConsult.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E69402767A9705A8F6BB05B3 /* Pods_TesteNTConsult.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,15 +42,21 @@
 
 /* Begin PBXFileReference section */
 		03EF05237648C18E94673BBA /* Pods-TesteNTConsult.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TesteNTConsult.release.xcconfig"; path = "Target Support Files/Pods-TesteNTConsult/Pods-TesteNTConsult.release.xcconfig"; sourceTree = "<group>"; };
-		3B61C54B27139A3D00703972 /* CheckinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
+		3B4639622720CDB8004AEF30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3B5B6A8A27206D8C005E6A0F /* CheckinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
+		3B5B6AA3272098FF005E6A0F /* EventosViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventosViewModel.swift; sourceTree = "<group>"; };
+		3B5B6AA827209923005E6A0F /* DetalhesEventoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalhesEventoViewModel.swift; sourceTree = "<group>"; };
+		3B5B6AAD27209939005E6A0F /* CheckinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewModel.swift; sourceTree = "<group>"; };
+		3B5B6AB127209948005E6A0F /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		3B5B6AB227209949005E6A0F /* MainCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		3B5B6AC32720A4E4005E6A0F /* ListaEventosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaEventosViewController.swift; sourceTree = "<group>"; };
+		3B6211E6271E196600523EB1 /* DetalhesEventoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalhesEventoViewController.swift; sourceTree = "<group>"; };
 		3B67C7762715DC7D00FC8B7F /* TesteNTConsultUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TesteNTConsultUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B67C7782715DC7E00FC8B7F /* TesteNTConsultUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesteNTConsultUITests.swift; sourceTree = "<group>"; };
 		3B67C77A2715DC7E00FC8B7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B6FAFD5271099FA00C5C312 /* TesteNTConsult.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TesteNTConsult.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B6FAFD8271099FA00C5C312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B6FAFDA271099FA00C5C312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3B6FAFDC271099FA00C5C312 /* EventosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventosViewController.swift; sourceTree = "<group>"; };
-		3B6FAFDF271099FA00C5C312 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B6FAFE1271099FC00C5C312 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B6FAFE4271099FC00C5C312 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B6FAFE6271099FC00C5C312 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,8 +65,7 @@
 		3B6FAFFC2710A1AE00C5C312 /* Constantes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constantes.swift; sourceTree = "<group>"; };
 		3B6FAFFF2710A1C800C5C312 /* EventoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventoCell.swift; sourceTree = "<group>"; };
 		3B6FB0002710A1C800C5C312 /* EventoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventoCell.xib; sourceTree = "<group>"; };
-		3B6FB0042710A1DF00C5C312 /* EventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
-		3B6FB00C2710C1CB00C5C312 /* DetalheEventoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalheEventoViewController.swift; sourceTree = "<group>"; };
+		3B6FB0042710A1DF00C5C312 /* EventoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventoModel.swift; sourceTree = "<group>"; };
 		AE97B6AD0B19A4C2E172DFC9 /* Pods-TesteNTConsult.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TesteNTConsult.debug.xcconfig"; path = "Target Support Files/Pods-TesteNTConsult/Pods-TesteNTConsult.debug.xcconfig"; sourceTree = "<group>"; };
 		E69402767A9705A8F6BB05B3 /* Pods_TesteNTConsult.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TesteNTConsult.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -88,26 +98,77 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		3B5B6A6F27205E86005E6A0F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B6211E6271E196600523EB1 /* DetalhesEventoViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3B5B6A8227206963005E6A0F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B5B6A8A27206D8C005E6A0F /* CheckinViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3B5B6A8E2720761D005E6A0F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B5B6AC32720A4E4005E6A0F /* ListaEventosViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3B5B6AA2272098FF005E6A0F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3B5B6AA3272098FF005E6A0F /* EventosViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3B5B6AA727209923005E6A0F /* DetalheViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3B5B6AA827209923005E6A0F /* DetalhesEventoViewModel.swift */,
+			);
+			path = DetalheViewModel;
+			sourceTree = "<group>";
+		};
+		3B5B6AAC27209939005E6A0F /* CheckinViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3B5B6AAD27209939005E6A0F /* CheckinViewModel.swift */,
+			);
+			path = CheckinViewModel;
+			sourceTree = "<group>";
+		};
 		3B61C54E2715051600703972 /* Evento */ = {
 			isa = PBXGroup;
 			children = (
-				3B6FAFDC271099FA00C5C312 /* EventosViewController.swift */,
+				3B5B6AA2272098FF005E6A0F /* ViewModel */,
+				3B5B6A8E2720761D005E6A0F /* View */,
 			);
 			path = Evento;
 			sourceTree = "<group>";
 		};
-		3B61C54F2715051F00703972 /* Detalhe */ = {
+		3B61C54F2715051F00703972 /* DetalheEvento */ = {
 			isa = PBXGroup;
 			children = (
-				3B6FB00C2710C1CB00C5C312 /* DetalheEventoViewController.swift */,
+				3B5B6AA727209923005E6A0F /* DetalheViewModel */,
+				3B5B6A6F27205E86005E6A0F /* View */,
 			);
-			path = Detalhe;
+			path = DetalheEvento;
 			sourceTree = "<group>";
 		};
 		3B61C5502715052700703972 /* Checkin */ = {
 			isa = PBXGroup;
 			children = (
-				3B61C54B27139A3D00703972 /* CheckinViewController.swift */,
+				3B5B6AAC27209939005E6A0F /* CheckinViewModel */,
+				3B5B6A8227206963005E6A0F /* View */,
 			);
 			path = Checkin;
 			sourceTree = "<group>";
@@ -144,14 +205,16 @@
 		3B6FAFD7271099FA00C5C312 /* TesteNTConsult */ = {
 			isa = PBXGroup;
 			children = (
+				3B5B6AB127209948005E6A0F /* Coordinator.swift */,
+				3B5B6AB227209949005E6A0F /* MainCoordinator.swift */,
 				3B6FAFFC2710A1AE00C5C312 /* Constantes.swift */,
-				3B6FAFF12710A14B00C5C312 /* Controller */,
+				3B6FAFD8271099FA00C5C312 /* AppDelegate.swift */,
+				3B6FAFDA271099FA00C5C312 /* SceneDelegate.swift */,
+				3B6FAFF12710A14B00C5C312 /* Screens */,
 				3B6FAFF02710A14500C5C312 /* View */,
 				3B6FAFEF2710A13C00C5C312 /* Model */,
 				3B6FAFEE2710A13200C5C312 /* Utils */,
 				3B6FAFED2710A12B00C5C312 /* Service */,
-				3B6FAFD8271099FA00C5C312 /* AppDelegate.swift */,
-				3B6FAFDA271099FA00C5C312 /* SceneDelegate.swift */,
 				3B6FAFE1271099FC00C5C312 /* Assets.xcassets */,
 				3B6FAFE6271099FC00C5C312 /* Info.plist */,
 			);
@@ -177,7 +240,7 @@
 		3B6FAFEF2710A13C00C5C312 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3B6FB0042710A1DF00C5C312 /* EventModel.swift */,
+				3B6FB0042710A1DF00C5C312 /* EventoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -185,22 +248,22 @@
 		3B6FAFF02710A14500C5C312 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3B4639612720CDB8004AEF30 /* Main.storyboard */,
 				3B6FAFE3271099FC00C5C312 /* LaunchScreen.storyboard */,
-				3B6FAFDE271099FA00C5C312 /* Main.storyboard */,
 				3B6FAFFF2710A1C800C5C312 /* EventoCell.swift */,
 				3B6FB0002710A1C800C5C312 /* EventoCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		3B6FAFF12710A14B00C5C312 /* Controller */ = {
+		3B6FAFF12710A14B00C5C312 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				3B61C54E2715051600703972 /* Evento */,
-				3B61C54F2715051F00703972 /* Detalhe */,
+				3B61C54F2715051F00703972 /* DetalheEvento */,
 				3B61C5502715052700703972 /* Checkin */,
 			);
-			path = Controller;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		945D2C28BA005DAA351C5215 /* Frameworks */ = {
@@ -303,7 +366,7 @@
 				3B6FB0022710A1C800C5C312 /* EventoCell.xib in Resources */,
 				3B6FAFE5271099FC00C5C312 /* LaunchScreen.storyboard in Resources */,
 				3B6FAFE2271099FC00C5C312 /* Assets.xcassets in Resources */,
-				3B6FAFE0271099FA00C5C312 /* Main.storyboard in Resources */,
+				3B4639632720CDB8004AEF30 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,15 +427,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B5B6AA927209923005E6A0F /* DetalhesEventoViewModel.swift in Sources */,
 				3B6FAFFA2710A1A100C5C312 /* Utils.swift in Sources */,
-				3B6FB00D2710C1CB00C5C312 /* DetalheEventoViewController.swift in Sources */,
-				3B6FAFDD271099FA00C5C312 /* EventosViewController.swift in Sources */,
+				3B5B6AB327209949005E6A0F /* Coordinator.swift in Sources */,
+				3B5B6AC42720A4E5005E6A0F /* ListaEventosViewController.swift in Sources */,
+				3B5B6AA4272098FF005E6A0F /* EventosViewModel.swift in Sources */,
+				3B6211E7271E196600523EB1 /* DetalhesEventoViewController.swift in Sources */,
 				3B6FAFD9271099FA00C5C312 /* AppDelegate.swift in Sources */,
 				3B6FAFF62710A18400C5C312 /* APIService.swift in Sources */,
 				3B6FAFDB271099FA00C5C312 /* SceneDelegate.swift in Sources */,
+				3B5B6AB427209949005E6A0F /* MainCoordinator.swift in Sources */,
 				3B6FAFFD2710A1AE00C5C312 /* Constantes.swift in Sources */,
-				3B6FB0052710A1DF00C5C312 /* EventModel.swift in Sources */,
-				3B61C54C27139A3D00703972 /* CheckinViewController.swift in Sources */,
+				3B5B6A8B27206D8C005E6A0F /* CheckinViewController.swift in Sources */,
+				3B5B6AAE27209939005E6A0F /* CheckinViewModel.swift in Sources */,
+				3B6FB0052710A1DF00C5C312 /* EventoModel.swift in Sources */,
 				3B6FB0012710A1C800C5C312 /* EventoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,10 +456,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3B6FAFDE271099FA00C5C312 /* Main.storyboard */ = {
+		3B4639612720CDB8004AEF30 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3B6FAFDF271099FA00C5C312 /* Base */,
+				3B4639622720CDB8004AEF30 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

@@ -8,5 +8,6 @@ target 'TesteNTConsult' do
   # Pods for TesteNTConsult
 
 pod 'ProgressHUD'
+pod 'CLTypingLabel', '~> 0.4.0'
 
 end

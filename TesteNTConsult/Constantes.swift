@@ -7,14 +7,14 @@
 
 import Foundation
 
-class Constants{
+class Constantes{
     //MARK: - Valores de url's
     static let base_url: String = "https://5f5a8f24d44d640016169133.mockapi.io/api/"
-    static let end_point_events: String = "events/"
+    static let end_point_eventos: String = "events/"
     static let end_point_checkin: String = "checkin"
     
     //MARK: - Celula
-    static let cellIdentifier = "reusableCell"
+    static let celulaIdentificador = "reusableCell"
     static let cellNibName = "EventoCell"
     
     //MARK: - Segues
@@ -22,8 +22,9 @@ class Constants{
     static let segueRetornaEventos = "retornaTelaEventos"
     
     //MARK: - ViewControllers
-    static let viewControllerDetalhe = "viewControllerDetalhe"
+    static let viewControllerEventos = "viewControllerEventos"
     static let viewControllerCheckin = "viewControllerCheckin"
+    static let viewControllerDetalhes = "viewControllerDetalhes"
     
     //MARK: - Mensagens
     static let mensagemRetornoSucesso = "Compartilhamento efetuado com sucesso"
@@ -38,4 +39,9 @@ class Constants{
     
     //MARK: - Botões alertas
     static let botaoOkAlerta = "Ok"
+    
+    struct BrandColors{
+        static let sicredi = "sicrediColor"
+
+    }
 }

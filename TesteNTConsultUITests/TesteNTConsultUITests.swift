@@ -10,8 +10,16 @@ import XCTest
 
 class TesteNTConsultUITests: XCTestCase {
 
+    var utils: Utils!
+    
     override func setUp() {
+        super.setUp()
         continueAfterFailure = false
+        utils = Utils()
+    }
+    
+    func testeObterEventos() throws {
+        XCTAssertNoThrow(try utils.formatacaoMoeda(valor: 2341.23133))
     }
     
     override func setUpWithError() throws {

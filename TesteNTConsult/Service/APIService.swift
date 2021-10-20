@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum APIError{
+enum ErroAPI{
     case url
-    case taskError
-    case noResponse
-    case noData
-    case responseStatusCode(code: Int)
-    case invalidJSON
+    case erroDataTask
+    case semResposta
+    case semDados
+    case erroCodigoStatus(code: Int)
+    case JSONinvalido
     case erroResposta
 }
 
@@ -24,106 +24,106 @@ enum APICodRetorno{
 class APIService{
         
     //MARK: - Obter eventos
-   func performRequestEvent(completion: @escaping([EventModel]?) -> Void, onError: @escaping(APIError) -> Void){
+   func obterEventos(completion: @escaping([EventoModel]?) -> Void, onError: @escaping(ErroAPI) -> Void){
         
-        let urlString = Constants.base_url + Constants.end_point_events
-        let session = URLSession(configuration: .default)
+        let urlString = Constantes.base_url + Constantes.end_point_eventos
+        let sessao = URLSession(configuration: .default)
         guard let url = URL(string: urlString) else{
             onError(.url)
             return
         }
         let request = URLRequest(url: url)
         
-        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task = sessao.dataTask(with: request, completionHandler: { data, response, error in
             if error != nil{
-                onError(.taskError)
+                onError(.erroDataTask)
                 return
             }
             guard let response = response as? HTTPURLResponse else{
-                onError(.noResponse)
+                onError(.semResposta)
                 return
             }
             if response.statusCode == 200 {
                 guard let data = data else{return}
                 do{
-                    let event = try JSONDecoder().decode([EventModel].self, from: data)
+                    let event = try JSONDecoder().decode([EventoModel].self, from: data)
                     completion(event)
                 }catch{
-                    onError(.invalidJSON)
+                    onError(.JSONinvalido)
                 }
             }else{
-                onError(.noResponse)
+                onError(.semResposta)
             }
         })
         task.resume()
     }
     
     //MARK: - Obter detalhe evento
-    func performRequestDetalheEvento(idEvento: String, completion: @escaping(EventModel?) -> Void, onError: @escaping(APIError) -> Void){
+    func obterDetalheEvento(idEvento: String, completion: @escaping(EventoModel?) -> Void, onError: @escaping(ErroAPI) -> Void){
          
-         let urlString = Constants.base_url + Constants.end_point_events + idEvento
+         let urlString = Constantes.base_url + Constantes.end_point_eventos + idEvento
          
-         let session = URLSession(configuration: .default)
+         let sessao = URLSession(configuration: .default)
          
          guard let url = URL(string: urlString) else{
              onError(.url)
              return
          }
          
-         let request = URLRequest(url: url)
+         let requisicao = URLRequest(url: url)
          
-         let task = session.dataTask(with: request, completionHandler: { data, response, error in
+         let task = sessao.dataTask(with: requisicao, completionHandler: { data, resposta, error in
              if error != nil{
-                 onError(.taskError)
+                 onError(.erroDataTask)
                  return
              }
              
-             guard let response = response as? HTTPURLResponse else{
-                 onError(.noResponse)
+             guard let resposta = resposta as? HTTPURLResponse else{
+                 onError(.semResposta)
                  return
              }
              
-             if response.statusCode == 200 {
+             if resposta.statusCode == 200 {
                  
                  guard let data = data else{return}
                  do{
-                     let event = try JSONDecoder().decode(EventModel.self, from: data)
-                     completion(event)
+                     let evento = try JSONDecoder().decode(EventoModel.self, from: data)
+                     completion(evento)
                  }catch{
-                     onError(.invalidJSON)
+                     onError(.JSONinvalido)
                  }
                  
              }else{
-                 onError(.noResponse)
+                 onError(.semResposta)
              }
          })
          task.resume()
      }
     
     //MARK: - Realizar checkin
-    func performCheckin(idEvento: String, nome: String, email: String, completion: @escaping(APICodRetorno) -> Void, onError: @escaping(APIError) -> Void){
+    func realizarCheckin(idEvento: String, nome: String, email: String, completion: @escaping(APICodRetorno) -> Void, onError: @escaping(ErroAPI) -> Void){
         
-        let urlString = Constants.base_url + Constants.end_point_checkin
-        let session = URLSession(configuration: .default)
+        let urlString = Constantes.base_url + Constantes.end_point_checkin
+        let sessao = URLSession(configuration: .default)
         let parametros = ["eventId": idEvento, "name": nome, "email": email] as Dictionary<String, String>
         guard let url = URL(string: urlString) else{
             onError(.url)
             return
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(parametros)
+        var requisicao = URLRequest(url: url)
+        requisicao.httpMethod = "POST"
+        requisicao.httpBody = try? JSONEncoder().encode(parametros)
         
-        let dataTask = session.dataTask(with: request, completionHandler: {data, response, error in
+        let dataTask = sessao.dataTask(with: requisicao, completionHandler: {data, resposta, error in
             
             if error != nil{
-                onError(.taskError)
+                onError(.erroDataTask)
                 return
             }
             
-            guard let response = response as? HTTPURLResponse else{
-                onError(.noResponse)
+            guard let response = resposta as? HTTPURLResponse else{
+                onError(.semResposta)
                 return
             }
             
